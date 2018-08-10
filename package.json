@@ -1,0 +1,26 @@
+{
+    "name": "ksql",
+    "displayName": "ksql",
+    "description": "Language support for KSQL",
+    "version": "0.0.1",
+    "publisher": "rmoff",
+    "engines": {
+        "vscode": "^1.25.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "ksql",
+            "aliases": ["KSQL", "ksql"],
+            "extensions": [".ksql"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "ksql",
+            "scopeName": "source.ksql",
+            "path": "./syntaxes/ksql.tmLanguage.json"
+        }]
+    }
+}
