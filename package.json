@@ -17,7 +17,7 @@
     "icon": "images/ksql.png",
     "displayName": "KSQL",
     "description": "Syntax Highlighting for KSQL.",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "publisher": "rmoff",
     "engines": {
         "vscode": "^1.25.0"
