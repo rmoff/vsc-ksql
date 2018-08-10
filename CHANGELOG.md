@@ -1,7 +1,6 @@
-# Change Log
-All notable changes to the "ksql" extension will be documented in this file.
+## Version history
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
-
-## [Unreleased]
-- Initial release
+Version | Who | Date | What
+-|-|-|-
+v0.01 | rmoff | 20180810 | Everything highlighted as a keyword. Need to make it much smarter. PRs welcome!
+v0.02 | rmoff | 20180810 | Add an icon, proper change history

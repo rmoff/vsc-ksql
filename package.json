@@ -1,7 +1,22 @@
 {
+    "bugs": {
+        "url": "https://github.com/rmoff/vsc-ksql/issues",
+        "email": "robin@rmoff.net"
+        
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/rmoff/vsc-ksql"
+    },
     "name": "ksql",
-    "displayName": "ksql",
-    "description": "Language support for KSQL",
+    "author": "rmoff",
+    "keywords": [
+        "ksql",
+        "kafka"
+    ],
+    "icon": "images/ksql.png",
+    "displayName": "KSQL",
+    "description": "Syntax Highlighting for KSQL.",
     "version": "0.0.1",
     "publisher": "rmoff",
     "engines": {
@@ -11,16 +26,25 @@
         "Programming Languages"
     ],
     "contributes": {
-        "languages": [{
-            "id": "ksql",
-            "aliases": ["KSQL", "ksql"],
-            "extensions": [".ksql"],
-            "configuration": "./language-configuration.json"
-        }],
-        "grammars": [{
-            "language": "ksql",
-            "scopeName": "source.ksql",
-            "path": "./syntaxes/ksql.tmLanguage.json"
-        }]
+        "languages": [
+            {
+                "id": "ksql",
+                "aliases": [
+                    "KSQL",
+                    "ksql"
+                ],
+                "extensions": [
+                    ".ksql"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "ksql",
+                "scopeName": "source.ksql",
+                "path": "./syntaxes/ksql.tmLanguage.json"
+            }
+        ]
     }
 }

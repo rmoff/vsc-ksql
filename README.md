@@ -1,5 +1,16 @@
 # KSQL VSCode Syntax Highlighting
 
-v0.1 - everything highlighted as a keyword. Need to make it much smarter. PRs welcome!
+This provides syntax highlighting for [KSQL - the streaming SQL engine for Apache Kafka](https://www.confluent.io/product/ksql/).
 
-@rmoff, August 10 2018
+![images/ksql-vscode.gif](screencam of KSQL syntax highlighting in action)
+
+## TODO
+
+PRs very welcome!
+
+* Differentiate between keywords, datatypes, etc in formatting
+* Add formatting (layout) capabilities
+* Syntax checking? 
+
+
+[@rmoff](https://twitter.com/rmoff/), August 10 2018
