@@ -1,8 +1,7 @@
 {
     "bugs": {
         "url": "https://github.com/rmoff/vsc-ksql/issues",
-        "email": "robin@rmoff.net"
-        
+        "email": "robin@rmoff.net"      
     },
     "repository": {
         "type": "git",
@@ -25,6 +24,12 @@
     "categories": [
         "Programming Languages"
     ],
+    "main": "./out/KSQLMain",
+    "activationEvents": [
+        "onLanguage:ksql",
+        "onView:ksqlExplorer",
+        "onDebugInitialConfigurations"
+    ],
     "contributes": {
         "languages": [
             {
@@ -45,6 +50,63 @@
                 "scopeName": "source.ksql",
                 "path": "./syntaxes/ksql.tmLanguage.json"
             }
-        ]
+        ],
+        "commands": [
+            {
+                "command": "ksql.explorer.refresh",
+                "title": "Refresh KSQL Explorer"
+            }
+        ], 
+        "views": {
+            "ksqlView": [
+                {
+                    "id": "ksqlExplorer",
+                    "name": "Explorer"
+                }
+            ]
+        },
+        "viewsContainers": {
+            "activitybar": [
+                {
+                    "icon": "images/kafka.svg",
+                    "id": "ksqlView",
+                    "title": "KSQL"
+                }
+            ]
+        },
+        "configuration": {
+            "type": "object",
+            "title": "KSQL configuration",
+            "properties": {
+                "ksql.url": {
+                    "type": "string",
+                    "default": "http://localhost:8088",
+                    "description": "Default url when running ksql locally."
+                },
+                "ksql.showExplorer": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Show or hide the Explorer."
+                }
+            }
+        }
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "npm run compile && node ./node_modules/vscode/bin/test"
+    },
+    "dependencies": {
+        "typed-rest-client": "^1.0.7",
+        "vscode-languageclient": "4.3.0"
+    },
+    "devDependencies": {
+        "typescript": "^2.6.1",
+        "vscode": "^1.1.6",
+        "tslint": "^5.8.0",
+        "@types/node": "^7.0.43",
+        "@types/mocha": "^2.2.42"
     }
 }
