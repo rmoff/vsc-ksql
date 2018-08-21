@@ -1,6 +1,13 @@
 'use strict';
 
-export interface KSQLsourceDescription {
+
+export interface KSQLSourceDescriptionResponse{
+    statementText : string,
+    sourceDescription: KSQLSourceDescription
+}
+
+
+export interface KSQLSourceDescription {
     statementText : string,
     name: string,
     type: string,
@@ -8,10 +15,23 @@ export interface KSQLsourceDescription {
     key: string,
     timestamp:string,
     topic:string,
-    schema : KSQLsourceDescriptionField[]
+    readQueries: string[],
+    writeQueries: string[],
+    statistics: string,
+    errorStats: string,
+    replication: number,
+    partitions: number,
+    extended: boolean,
+    fields : KSQLSourceDescriptionField[]
 }
 
-export interface KSQLsourceDescriptionField{
+export interface KSQLSourceDescriptionField{
     name :string,
-    type: string
+    schema: KSQLSourceDescriptionFieldSchema
+}
+
+export interface KSQLSourceDescriptionFieldSchema{
+    type: string,
+    memberSchema: any,
+    fields: any
 }
