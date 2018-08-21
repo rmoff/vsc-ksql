@@ -1,7 +1,7 @@
 {
     "bugs": {
         "url": "https://github.com/rmoff/vsc-ksql/issues",
-        "email": "robin@rmoff.net"      
+        "email": "robin@rmoff.net"
     },
     "repository": {
         "type": "git",
@@ -15,7 +15,7 @@
     ],
     "icon": "images/ksql.png",
     "displayName": "KSQL",
-    "description": "Langauge Support for KSQL.",
+    "description": "Language Support for KSQL.",
     "version": "0.1.0",
     "publisher": "rmoff",
     "engines": {
@@ -56,7 +56,7 @@
                 "command": "ksql.explorer.refresh",
                 "title": "Refresh KSQL Explorer"
             }
-        ], 
+        ],
         "views": {
             "ksqlView": [
                 {
