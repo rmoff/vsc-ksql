@@ -1,6 +1,8 @@
 # KSQL VSCode Syntax Highlighting
 
-This provides syntax highlighting for [KSQL - the streaming SQL engine for Apache Kafka](https://www.confluent.io/product/ksql/).
+This provides language support for [KSQL - the streaming SQL engine for Apache Kafka](https://www.confluent.io/product/ksql/).
+
+![Screenshot](images/ksql-vscode-01.png)
 
 ![screencam of KSQL syntax highlighting in action](images/ksql-vscode.gif)
 
@@ -23,11 +25,11 @@ The second option is verbose to explain but much faster if you're a keyboard-war
 
 When you install the extension you get a Kafka icon in the activity bar, and you can see the topics, streams and tables in your connected instance. You can refresh the Explorer with Ctrl+Shift+P and choose the `Refresh KSQL Explorer` command. 
 
-![Example of KSQL Explorer showing Topics, Streams, and Tables](https://user-images.githubusercontent.com/9764640/44015952-40250d68-9ed3-11e8-8c17-a4c7b7f6866e.png)
+![Example of KSQL Explorer showing Topics, Streams, and Tables](images/ksql-vscode-02.png)
 
 The extension assumes that your KSQL server is at `localhost:8088`. If it is not change the endpoint URL in the workspace config. 
 
-![Using Workspace Config to change the KSQL endpoint](https://user-images.githubusercontent.com/9764640/44016309-cd067bbc-9ed4-11e8-867e-43181ecbe678.png)
+![Using Workspace Config to change the KSQL endpoint](images/ksql-vscode-03.png)
 
 ## Get up and start developing straight away
 

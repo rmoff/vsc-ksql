@@ -16,7 +16,7 @@
     "icon": "images/ksql.png",
     "displayName": "KSQL",
     "description": "Language Support for KSQL.",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "publisher": "rmoff",
     "engines": {
         "vscode": "^1.25.0"
