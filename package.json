@@ -8,15 +8,15 @@
         "url": "https://github.com/rmoff/vsc-ksql"
     },
     "name": "ksql",
-    "author": "rmoff",
+    "author": "dgcaron, rmoff",
     "keywords": [
         "ksql",
         "kafka"
     ],
     "icon": "images/ksql.png",
     "displayName": "KSQL",
-    "description": "Syntax Highlighting for KSQL.",
-    "version": "0.0.2",
+    "description": "Langauge Support for KSQL.",
+    "version": "0.1.0",
     "publisher": "rmoff",
     "engines": {
         "vscode": "^1.25.0"
@@ -81,7 +81,7 @@
                 "ksql.url": {
                     "type": "string",
                     "default": "http://localhost:8088",
-                    "description": "Default url when running ksql locally."
+                    "description": "Default URL when running KSQL locally."
                 },
                 "ksql.showExplorer": {
                     "type": "boolean",

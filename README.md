@@ -21,8 +21,17 @@ To apply it to any other file, switch the language mode to `KSQL`. You can do th
 
 The second option is verbose to explain but much faster if you're a keyboard-warrior 😎
 
+When you install the extension you get a Kafka icon in the activity bar, and you can see the topics, streams and tables in your connected instance. You can refresh the Explorer with Ctrl+Shift+P and choose the `Refresh KSQL Explorer` command. 
+
+![Example of KSQL Explorer showing Topics, Streams, and Tables](https://user-images.githubusercontent.com/9764640/44015952-40250d68-9ed3-11e8-8c17-a4c7b7f6866e.png)
+
+The extension assumes that your KSQL server is at `localhost:8088`. If it is not change the endpoint URL in the workspace config. 
+
+![Using Workspace Config to change the KSQL endpoint](https://user-images.githubusercontent.com/9764640/44016309-cd067bbc-9ed4-11e8-867e-43181ecbe678.png)
+
 ## Get up and start developing straight away
-* open the terminal in the root of the folder and call `npm install`
+
+* Open the terminal in the root of the folder and call `npm install`
 * Press `F5` to open a new window with this extension loaded.
 * open a file with the .ksql extension in the newly openened window.
 * Set breakpoints in the code inside `src/KSQLMain.ts` to debug the extension.
@@ -33,9 +42,17 @@ The second option is verbose to explain but much faster if you're a keyboard-war
 PRs very welcome!
 
 * Differentiate between keywords, datatypes, etc in formatting
-* Add formatting (layout) capabilities
-* Syntax checking? 
+* Formatting capabilities
+    * Indents
+    * Line breaks (including line continuation character)
+    * UPPER CASE on keywords
+* Syntax checking
 
----- 
+## Changelog
 
-[@rmoff](https://twitter.com/rmoff/), August 10 2018
+See [CHANGELOG.md](CHANGELOG.md)
+
+## Authors
+
+* [@dgcaron](https://twitter.com/dgcaron/)
+* [@rmoff](https://twitter.com/rmoff/)
