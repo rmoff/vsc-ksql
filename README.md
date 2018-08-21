@@ -21,6 +21,13 @@ To apply it to any other file, switch the language mode to `KSQL`. You can do th
 
 The second option is verbose to explain but much faster if you're a keyboard-warrior 😎
 
+## Get up and start developing straight away
+* open the terminal in the root of the folder and call `npm install`
+* Press `F5` to open a new window with this extension loaded.
+* open a file with the .ksql extension in the newly openened window.
+* Set breakpoints in the code inside `src/KSQLMain.ts` to debug the extension.
+* Find output from the extension in the debug console of the initial window.
+
 ## TODO
 
 PRs very welcome!
