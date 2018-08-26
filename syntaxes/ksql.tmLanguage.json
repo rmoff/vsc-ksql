@@ -6,24 +6,244 @@
 			"include": "#keywords"
 		},
 		{
-			"include": "#functions"
+			"include": "#functions-returning-string"
+		},
+		{
+			"include": "#functions-returning-numeric"
+		},
+		{
+			"include": "#functions-returning-boolean"
+		},
+		{
+			"include": "#functions-returning-any"
+		},
+		{
+			"include": "#functions-timestamps"
+		},
+		{
+			"include": "#functions-aggragations"
+		},
+		{
+			"include": "#functions-masks"
 		},
 		{
 			"include": "#strings"
+		},
+		{
+			"include": "#string-single"
+		},
+		{
+			"include": "#numeric"
 		}
 	],
 	"repository": {
 		"keywords": {
-			"patterns": [{
-				"name": "keyword.control.ksql",
-				"match": "(?i)\\b(DOUBLE|VARCHAR|INT|BIGINT|STRUCT|ARRAY|KAFKA_TOPIC|VALUE_FORMAT|PARTITIONS|REPLICATION|ADD|ADVANCE|ALL|ALTER|ANALYZE|AND|ANSI|ANY|APPROXIMATE|ARRAY|AS|ASC|AST|ASTERISK|AT|BACKQUOTED_IDENTIFIER|BEGINNING|BERNOULLI|BETWEEN|BINARY_LITERAL|BRACKETED_COMMENT|BY|CALL|CASE|CAST|CATALOG|CATALOGS|COALESCE|COLUMN|COLUMNS|COMMIT|COMMITTED|CONFIDENCE|CONSTRAINT|CREATE|CUBE|CURRENT|CURRENT_DATE|CURRENT_TIME|CURRENT_TIMESTAMP|DATA|DATE|DAY|DAYS|DEALLOCATE|DECIMAL_VALUE|DELETE|DESC|DESCRIBE|DIGIT|DIGIT_IDENTIFIER|DISTINCT|DISTRIBUTED|DROP|ELSE|END|ESCAPE|EXCEPT|EXECUTE|EXISTS|EXPLAIN|EXPONENT|EXPORT|EXTENDED|EXTRACT|FALSE|FIRST|FOLLOWING|FOR|FORMAT|FROM|FULL|FUNCTION|FUNCTIONS|GROUP|GROUPING|HAVING|HOPPING|HOUR|HOURS|IDENTIFIER|IF|IN|INNER|INSERT|INTEGER|INTEGER_VALUE|INTERSECT|INTERVAL|INTO|IS|ISOLATION|JOIN|LAST|LEFT|LETTER|LEVEL|LIKE|LIMIT|LIST|LOAD|LOCALTIME|LOCALTIMESTAMP|LOGICAL|LT|LTE|MAP|MILLISECOND|MILLISECONDS|MINUS|MINUTE|MINUTES|MONTH|MONTHS|NEQ|NFC|NFD|NFKC|NFKD|NO|NORMALIZE|NOT|NULL|NULLIF|NULLS|ON|ONLY|OPTION|OR|ORDER|ORDINALITY|OUTER|OVER|PARTITION|PARTITIONS|PERCENT|PLUS|POISSONIZED|POSITION|PRECEDING|PREPARE|PRINT|PRIVILEGES|PROPERTIES|PUBLIC|QUERIES|QUERY|QUOTED_IDENTIFIER|RANGE|READ|RECURSIVE|REGISTER|REGISTERED|RENAME|REPEATABLE|REPLACE|RESCALED|RESET|REVOKE|RIGHT|ROLLBACK|ROLLUP|ROW|ROWS|RUN|SAMPLE|SCHEMAS|SCRIPT|SECOND|SECONDS|SELECT|SERIALIZABLE|SESSION|SET|SETS|SHOW|SIMPLE_COMMENT|SIZE|SLASH|SMALLINT|SOME|SQL|START|STRATIFY|STREAM|STREAMS|STRING|STRUCT|STRUCT_FIELD_REF|SYSTEM|TABLE|TABLES|TABLESAMPLE|TERMINATE|TEXT|THEN|TIME|TIMESTAMP|TIMESTAMP_WITH_TIME_ZONE|TIME_WITH_TIME_ZONE|TINYINT|TO|TOPIC|TOPICS|TRANSACTION|TRUE|TRY|TRY_CAST|TUMBLING|TYPE|UNBOUNDED|UNCOMMITTED|UNION|UNNEST|UNRECOGNIZED|UNSET|USE|USING|VALUES|VIEW|WHEN|WHERE|WINDOW|WITH|WITHIN|WORK|WRITE|YEAR|YEARS|ZONE)\\b"
-			}]
+			"patterns": [
+				{
+					"name": "keyword.control.ksql",
+					"match": "(?i)\\b(DOUBLE|VARCHAR|INT|BIGINT|STRUCT|ARRAY|KAFKA_TOPIC|VALUE_FORMAT|PARTITIONS|REPLICATION|ADD|ADVANCE|ALL|ALTER|ANALYZE|AND|ANSI|ANY|APPROXIMATE|ARRAY|AS|ASC|AST|ASTERISK|AT|BACKQUOTED_IDENTIFIER|BEGINNING|BERNOULLI|BETWEEN|BINARY_LITERAL|BRACKETED_COMMENT|BY|CALL|CASE|CAST|CATALOG|CATALOGS|COALESCE|COLUMN|COLUMNS|COMMIT|COMMITTED|CONFIDENCE|CONSTRAINT|CREATE|CUBE|CURRENT|CURRENT_DATE|CURRENT_TIME|CURRENT_TIMESTAMP|DATA|DATE|DAY|DAYS|DEALLOCATE|DECIMAL_VALUE|DELETE|DESC|DESCRIBE|DIGIT|DIGIT_IDENTIFIER|DISTINCT|DISTRIBUTED|DROP|ELSE|END|ESCAPE|EXCEPT|EXECUTE|EXISTS|EXPLAIN|EXPONENT|EXPORT|EXTENDED|EXTRACT|FALSE|FIRST|FOLLOWING|FOR|FORMAT|FROM|FULL|FUNCTION|FUNCTIONS|GROUP|GROUPING|HAVING|HOPPING|HOUR|HOURS|IDENTIFIER|IF|IN|INNER|INSERT|INTEGER|INTEGER_VALUE|INTERSECT|INTERVAL|INTO|IS|ISOLATION|JOIN|LAST|LEFT|LETTER|LEVEL|LIKE|LIMIT|LIST|LOAD|LOCALTIME|LOCALTIMESTAMP|LOGICAL|LT|LTE|MAP|MILLISECOND|MILLISECONDS|MINUS|MINUTE|MINUTES|MONTH|MONTHS|NEQ|NFC|NFD|NFKC|NFKD|NO|NORMALIZE|NOT|NULL|NULLIF|NULLS|ON|ONLY|OPTION|OR|ORDER|ORDINALITY|OUTER|OVER|PARTITION|PARTITIONS|PERCENT|PLUS|POISSONIZED|POSITION|PRECEDING|PREPARE|PRINT|PRIVILEGES|PROPERTIES|PUBLIC|QUERIES|QUERY|QUOTED_IDENTIFIER|RANGE|READ|RECURSIVE|REGISTER|REGISTERED|RENAME|REPEATABLE|REPLACE|RESCALED|RESET|REVOKE|RIGHT|ROLLBACK|ROLLUP|ROW|ROWS|RUN|SAMPLE|SCHEMAS|SCRIPT|SECOND|SECONDS|SELECT|SERIALIZABLE|SESSION|SET|SETS|SHOW|SIMPLE_COMMENT|SIZE|SLASH|SMALLINT|SOME|SQL|START|STRATIFY|STREAM|STREAMS|STRING|STRUCT|STRUCT_FIELD_REF|SYSTEM|TABLE|TABLES|TABLESAMPLE|TERMINATE|TEXT|THEN|TIME|TIMESTAMP|TIMESTAMP_WITH_TIME_ZONE|TIME_WITH_TIME_ZONE|TINYINT|TO|TOPIC|TOPICS|TRANSACTION|TRUE|TRY|TRY_CAST|TUMBLING|TYPE|UNBOUNDED|UNCOMMITTED|UNION|UNNEST|UNRECOGNIZED|UNSET|USE|USING|VALUES|VIEW|WHEN|WHERE|WINDOW|WITH|WITHIN|WORK|WRITE|YEAR|YEARS|ZONE)\\b"
+				}
+			]
 		},
-		"functions":{
-			"patterns": [{
-				"name": "entity.name.function.ksql",
-				"match": "(?i)\\b(ABS|CEIL|FLOOR|LCASE|LEN|ROUND|TRIM|UCASE|RANDOM|STRINGTOTIMESTAMP|TIMESTAMPTOSTRING|ARRAYCONTAINS|CONCAT|EXTRACTJSONFIELD|SUBSTRING|GEO_DISTANCE|MASK|MASK_LEFT|MASK_KEEP_LEFT|MASK_RIGHT|MASK_KEEP_RIGHT|COUNT|MAX|MIN|SUM|TOPK|TOPKDISTINCT)\\b"
-			}]
+		"field": {
+			"patterns": [
+				{
+					"name": "variable.object.property",
+					"match": "\\b(\\w+)\\b"
+				}
+			]
+		},
+		"numeric": {
+			"patterns": [
+				{
+					"name": "constant.numeric.integer.ksql",
+					"match": "\\b(\\d)\\b"
+				}
+			]
+		},
+		"functions-returning-string":{
+			"patterns": [
+				{
+					"name": "meta.function.string.ksql",
+					"begin": "(?i)\\b(LCASE|TRIM|UCASE|SUBSTRING|CONCAT)\\s*\\(",
+					"beginCaptures": {
+						"1": {
+							"name": "entity.name.function.ksql"
+						}
+					},
+					"patterns": [
+						{
+							"include": "$self"
+						},
+						{
+							"include": "#field"
+						}
+					],
+					"end": "\\)"
+				}
+			]
+		},
+		"functions-returning-numeric": {
+			"patterns": [
+				{
+					"name": "meta.function.scalar.ksql",
+					"begin": "(?i)\\b(RANDOM|ABS|CEIL|FLOOR|LEN|ROUND|GEO_DISTANCE)\\s*\\(",
+					"beginCaptures": {
+						"1": {
+							"name": "entity.name.function.ksql"
+						}
+					},
+					"patterns": [
+						{
+							"include": "$self"
+						},
+						{
+							"include": "#numeric"
+						},
+						{
+							"include": "#field"
+						}
+					],
+					"end": "\\)"
+				}
+			]
+		},
+		"functions-returning-boolean": {
+			"patterns": [
+				{
+					"name": "meta.function.boolean.ksql",
+					"begin": "(?i)\\b(ARRAYCONTAINS)\\s*\\(",
+					"beginCaptures": {
+						"1": {
+							"name": "entity.name.function.ksql"
+						}
+					},
+					"patterns": [
+						{
+							"include": "$self"
+						},
+						{
+							"include": "#numeric"
+						},	
+						{
+							"include": "#field"
+						},
+						{
+							"include": "#string-single"
+						}
+					],
+					"end": "\\)"
+				}
+			]
+		},
+		"functions-returning-any": {
+			"patterns": [
+				{
+					"name": "meta.function.boolean.ksql",
+					"begin": "(?i)\\b(EXTRACTJSONFIELD)\\s*\\(",
+					"beginCaptures": {
+						"1": {
+							"name": "entity.name.function.ksql"
+						}
+					},
+					"patterns": [
+						{
+							"include": "$self"
+						},
+						{
+							"include": "#numeric"
+						},	
+						{
+							"include": "#field"
+						},
+						{
+							"include": "#string-single"
+						}
+					],
+					"end": "\\)"
+				}
+			]
+		},
+		"functions-timestamps": {
+			"patterns": [
+				{
+					"name": "meta.function.timestamps.ksql",
+					"begin": "(?i)\\b(STRINGTOTIMESTAMP|TIMESTAMPTOSTRING)\\s*\\(",
+					"beginCaptures": {
+						"1": {
+							"name": "entity.name.function.ksql"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#field"
+						},
+						{
+							"include": "#string-single" 
+						}
+					],
+					"end": "\\)"
+				}
+			]
+		},
+		"functions-aggragations": {
+			"patterns": [
+				{
+					"name": "meta.function.aggragations.ksql",
+					"begin": "(?i)\\b(COUNT|MAX|MIN|SUM|TOPK|TOPKDISTINCT)\\(",
+					"beginCaptures": {
+						"1": {
+							"name": "entity.name.function.ksql"
+						}
+					},
+					"patterns": [
+						{
+							"include": "$self"
+						},
+						{
+							"include": "#functions-returning-numeric"
+						},
+						{
+							"include": "#numeric"
+						},
+						{
+							"include": "#field"
+						}
+					],
+					"end": "\\)"
+				}
+			]
+		},
+		"functions-masks": {
+			"patterns": [
+				{
+					"name": "meta.function.masks.ksql",
+					"begin": "(?i)\\b(MASK|MASK_LEFT|MASK_KEEP_LEFT|MASK_RIGHT|MASK_KEEP_RIGHT)\\s*\\(",
+					"beginCaptures": {
+						"1": {
+							"name": "entity.name.function.ksql"
+						}
+					},
+					"patterns": [
+						{
+							"include": "$self"
+						},
+						{
+							"include": "#functions-returning-numeric"
+						},
+						{
+							"include": "#numeric"
+						},
+						{
+							"include": "#field"
+						},	
+						{
+							"include": "#string-single"
+						}
+					],
+					"end": "\\)"
+				}
+			]
 		},
 		"strings": {
 			"name": "string.quoted.double.ksql",
@@ -35,6 +255,11 @@
 					"match": "\\\\."
 				}
 			]
+		},
+		"string-single": {
+			"name": "string.quoted.single.ksql",
+			"begin": "'",
+			"end": "'"
 		}
 	},
 	"scopeName": "source.ksql"
