@@ -16,7 +16,7 @@
     "icon": "images/ksql.png",
     "displayName": "KSQL",
     "description": "Language Support for KSQL.",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "publisher": "rmoff",
     "engines": {
         "vscode": "^1.25.0"
@@ -55,6 +55,14 @@
             {
                 "command": "ksql.explorer.refresh",
                 "title": "Refresh KSQL Explorer"
+            },
+            {
+                "command": "ksql.explorer.describe",
+                "title": "Describe"
+            },
+            {
+                "command": "ksql.explorer.describe_extended",
+                "title": "Describe Extended"
             }
         ],
         "views": {
@@ -71,6 +79,26 @@
                     "icon": "images/kafka.svg",
                     "id": "ksqlView",
                     "title": "KSQL"
+                }
+            ]
+        },
+        "menus": {
+            "view/item/context": [
+                {
+                    "command": "ksql.explorer.describe",
+                    "when": "view == ksqlExplorer && viewItem == table"
+                },
+                {
+                    "command": "ksql.explorer.describe",
+                    "when": "view == ksqlExplorer && viewItem == stream"
+                },
+                {
+                    "command": "ksql.explorer.describe_extended",
+                    "when": "view == ksqlExplorer && viewItem == table"
+                },
+                {
+                    "command": "ksql.explorer.describe_extended",
+                    "when": "view == ksqlExplorer && viewItem == stream"
                 }
             ]
         },

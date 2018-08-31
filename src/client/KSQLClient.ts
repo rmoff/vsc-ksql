@@ -2,7 +2,7 @@
 
 import * as http from 'typed-rest-client/HttpClient';
 import { KSQLCommandResponse } from './models/KSQLCommandResponse';
-import { KSQLsourceDescription } from './models/KSQLsourceDescription'
+import { KSQLSourceDescriptionResponse } from './models/KSQLSourceDescription'
 import { Topics, Topic } from './models/topic';
 import { Streams, Stream } from './models/stream';
 import { Tables, Table } from './models/table';
@@ -45,13 +45,13 @@ export class KSQLClient {
         return result !== null && result.length > 0 ? Promise.resolve(result[0].tables) : Promise.reject();
     }
 
-    public async describe(entity:string) : Promise<KSQLsourceDescription> {
-        let result : KSQLsourceDescription[] =  await this.issueCommand<KSQLsourceDescription[]>("DESCRIBE "+entity+";" );
+    public async describe(entity:string) : Promise<KSQLSourceDescriptionResponse> {
+        let result : KSQLSourceDescriptionResponse[] =  await this.issueCommand<KSQLSourceDescriptionResponse[]>("DESCRIBE "+entity+";" );
         return result !== null && result.length > 0 ? Promise.resolve(result[0]) : Promise.reject();
     }
 
-    public async describeExtended(entity:string) : Promise<KSQLsourceDescription> {
-        let result : KSQLsourceDescription[] =  await this.issueCommand<KSQLsourceDescription[]>("DESCRIBE EXTENDED "+entity+";" );
+    public async describeExtended(entity:string) : Promise<KSQLSourceDescriptionResponse> {
+        let result : KSQLSourceDescriptionResponse[] =  await this.issueCommand<KSQLSourceDescriptionResponse[]>("DESCRIBE EXTENDED "+entity+";" );
         return result !== null && result.length > 0 ? Promise.resolve(result[0]) : Promise.reject();
     }
 
