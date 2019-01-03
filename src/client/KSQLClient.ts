@@ -2,7 +2,7 @@
 
 import * as http from 'typed-rest-client/HttpClient';
 import { KSQLCommandResponse } from './models/KSQLCommandResponse';
-import { KSQLSourceDescriptionResponse } from './models/KSQLSourceDescription'
+import { KSQLSourceDescriptionResponse } from './models/KSQLSourceDescription';
 import { Topics, Topic } from './models/topic';
 import { Streams, Stream } from './models/stream';
 import { Tables, Table } from './models/table';
@@ -27,7 +27,11 @@ export class KSQLClient {
         if(body !== null){
             obj = JSON.parse(body);
         }
-        return obj !== null ? Promise.resolve(obj) : Promise.reject(response.message);
+        return obj !== null && !obj.error_code ? Promise.resolve(obj) : Promise.reject(obj);
+    }
+
+    public async execute(ksql:string): Promise<KSQLCommandResponse[]> {
+        return await this.issueCommand<KSQLCommandResponse[]>(ksql);
     }
 
     public async getTopics() : Promise<Topic[]> {

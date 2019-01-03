@@ -16,7 +16,7 @@
     "icon": "images/ksql.png",
     "displayName": "KSQL",
     "description": "Language Support for KSQL.",
-    "version": "0.1.3",
+    "version": "0.1.5",
     "publisher": "rmoff",
     "engines": {
         "vscode": "^1.25.0"
@@ -63,6 +63,14 @@
             {
                 "command": "ksql.explorer.describe_extended",
                 "title": "Describe Extended"
+            },
+            {
+                "command": "ksql.editor.execute",
+                "title": "RUN script"
+            },
+            {
+                "command": "ksql.editor.execute_selection",
+                "title": "RUN selection"
             }
         ],
         "views": {
@@ -83,6 +91,16 @@
             ]
         },
         "menus": {
+            "editor/context": [
+                {
+                    "command": "ksql.editor.execute",
+                    "when": "editorLangId == ksql"
+                },
+                {
+                    "command": "ksql.editor.execute_selection",
+                    "when": "editorLangId == ksql && editorHasSelection"
+                }
+            ],
             "view/item/context": [
                 {
                     "command": "ksql.explorer.describe",

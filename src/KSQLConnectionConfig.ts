@@ -13,7 +13,7 @@ export class KSQLConnectionConfig {
     }
 
     public getConfiguration(extensionName: string, resource?: Uri | string): WorkspaceConfiguration {
-        if (resource === 'undefined' || resource == null) {
+        if (resource === 'undefined' || resource === null) {
             resource = this.activeTextEditorUri;
         }
         if (typeof resource === 'string') {

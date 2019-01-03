@@ -6,18 +6,28 @@ import { KSQLConnectionConfig } from './KSQLConnectionConfig';
 import { KSQLClient } from './client/KSQLClient';
 import { KSQLExplorerProvider } from './explorer/KSQLExplorerProvider';
 import { KSQLTextDocumentContentProvider } from './preview/KSQLTextDocumentContentProvider';
+import { KSQLEditorCommandProvider } from './editor/KSQLEditorCommandProvider';
 
 export let ksqlExplorerProvider: KSQLExplorerProvider;
+export let ksqlEditorCommandProvider: KSQLEditorCommandProvider;
 
 export function activate(context: vscode.ExtensionContext) {
 
     var settings = new KSQLConnectionConfig().getConfiguration("ksql");
     
-    let httpClient: http.HttpClient = new http.HttpClient("vs-code")
+    let httpClient: http.HttpClient = new http.HttpClient("vs-code");
     let client: KSQLClient = new KSQLClient(httpClient, settings.url);
 
+    registerEditorCommands(context,client);
     registerExplorer(context,client);
     registerPreview(context,client);
+}
+
+function registerEditorCommands(context: vscode.ExtensionContext, client: KSQLClient) {
+    ksqlEditorCommandProvider = new KSQLEditorCommandProvider(client);
+
+    vscode.commands.registerCommand('ksql.editor.execute', () => ksqlEditorCommandProvider.executeFile());
+    vscode.commands.registerCommand('ksql.editor.execute_selection', () => ksqlEditorCommandProvider.executeSelection());
 }
 
 function registerExplorer(context: vscode.ExtensionContext, client: KSQLClient){
@@ -43,7 +53,7 @@ function registerExplorer(context: vscode.ExtensionContext, client: KSQLClient){
 
 function registerPreview(context: vscode.ExtensionContext, client: KSQLClient){
     let provider = new KSQLTextDocumentContentProvider(client);
-    let providerRegistrations = vscode.Disposable.from(vscode.workspace.registerTextDocumentContentProvider(KSQLTextDocumentContentProvider.scheme, provider))
+    let providerRegistrations = vscode.Disposable.from(vscode.workspace.registerTextDocumentContentProvider(KSQLTextDocumentContentProvider.scheme, provider));
 
     context.subscriptions.push(providerRegistrations);
 }

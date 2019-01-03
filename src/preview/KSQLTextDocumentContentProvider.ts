@@ -2,7 +2,7 @@
 
 import * as vscode from 'vscode';
 import { KSQLClient } from '../client/KSQLClient';
-import { KSQLSourceDescriptionResponse, KSQLSourceDescription, KSQLSourceDescriptionFieldSchema } from '../client/models/KSQLSourceDescription'
+import { KSQLSourceDescriptionResponse, KSQLSourceDescription, KSQLSourceDescriptionFieldSchema } from '../client/models/KSQLSourceDescription';
 
 export class KSQLTextDocumentContentProvider implements vscode.TextDocumentContentProvider {
 
@@ -94,7 +94,7 @@ class KSQLTextDocumentFormatter {
 
     public formatSchema(schema: KSQLSourceDescriptionFieldSchema) : string{
         if((schema.type === "MAP"  || schema.type === "ARRAY") && schema.memberSchema !== null) { 
-            return `${schema.type} (${schema.memberSchema.type})`
+            return `${schema.type} (${schema.memberSchema.type})`;
         }
 
         if(schema.type === "STRUCT" && schema.memberSchema !== null) {
