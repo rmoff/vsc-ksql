@@ -22,7 +22,7 @@ export class TablesNode extends NodeBase {
             label: this.label,
             collapsibleState: vscode.TreeItemCollapsibleState.Collapsed,
             contextValue: this.contextValue
-        }
+        };
     }
 
     public async getChildren(element: NodeBase): Promise<NodeBase[]> {
@@ -30,7 +30,7 @@ export class TablesNode extends NodeBase {
         let tables: Table[] = await this._client.getTables();
         if(tables !== null && tables !== undefined){
             tables.forEach(element => {
-            nodes.push(new TableNode(element.name));
+            nodes.push(new TableNode(this._client, element.name));
             });
         }
 
