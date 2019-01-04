@@ -7,6 +7,7 @@ import { KSQLClient } from './client/KSQLClient';
 import { KSQLExplorerProvider } from './explorer/KSQLExplorerProvider';
 import { KSQLTextDocumentContentProvider } from './preview/KSQLTextDocumentContentProvider';
 import { KSQLEditorCommandProvider } from './editor/KSQLEditorCommandProvider';
+import { KSQLFormatter } from './editor/KSQLFormatter';
 
 export let ksqlExplorerProvider: KSQLExplorerProvider;
 export let ksqlEditorCommandProvider: KSQLEditorCommandProvider;
@@ -28,6 +29,10 @@ function registerEditorCommands(context: vscode.ExtensionContext, client: KSQLCl
 
     vscode.commands.registerCommand('ksql.editor.execute', () => ksqlEditorCommandProvider.executeFile());
     vscode.commands.registerCommand('ksql.editor.execute_selection', () => ksqlEditorCommandProvider.executeSelection());
+
+    vscode.languages.registerDocumentFormattingEditProvider(
+        {scheme: 'file', language: 'ksql'}, 
+        new KSQLFormatter());
 }
 
 function registerExplorer(context: vscode.ExtensionContext, client: KSQLClient){
