@@ -1,0 +1,15 @@
+CREATE TABLE table_name
+WITH ( KAFKA_TOPIC="topic1", VALUE_FORMAT="JSON", PARTITIONS=1, REPLICAS=1, TIMESTAMP="bigint1", TIMESTAMP_FORMAT="yyyy-MM-dd’‘T’‘HH:mm:ssX"  )
+AS SELECT ( 
+    boolean1,
+    integer1,
+    bigint1,
+    double1,
+    vachar1, 
+    array1, 
+    map1, 
+    struct1)
+FROM table_src AS s
+LEFT JOIN table_join AS j WITHIN 1 HOURS ON s.integer1 = j.integer1
+WHERE s.boolean1 = TRUE
+PARTITION BY vachar1; 

@@ -1,0 +1,16 @@
+SELECT ( 
+    boolean1,
+    integer1,
+    bigint1,
+    double1,
+    vachar1, 
+    array1, 
+    map1, 
+    struct1) 
+  FROM stream_name
+  LEFT JOIN join_table ON join_criteria
+  [ WINDOW window_expression ]
+  [ WHERE condition ]
+  [ GROUP BY grouping_expression ]
+  [ HAVING having_expression ]
+  [ LIMIT count ]

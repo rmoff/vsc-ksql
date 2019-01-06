@@ -1,5 +1,7 @@
 'use strict';
 
+
+
 export const KSQLKeywords: string[] = [
     'KAFKA_TOPIC',
     'VALUE_FORMAT',
@@ -293,5 +295,4 @@ export const KSQLFunctions: string[] = [
     'MASK_KEEP_RIGHT'
 ];
 
-
-export const KSQLKeywordRegex: RegExp = new RegExp("(\\b"+KSQLKeywords.concat(KSQLShow).concat(KSQLTypes).concat(KSQLWithParameters).join("\\b|\\b")+"\\b)","ig");
+export const KSQLReserved : string[] = KSQLKeywords.concat(KSQLShow).concat(KSQLTypes).concat(KSQLWithParameters);

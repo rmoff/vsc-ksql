@@ -1,0 +1,13 @@
+INSERT INTO stream_name
+    SELECT ( 
+        boolean1 BOOLEAN,
+        integer1 INTEGER,
+        bigint1 BIGNINT,
+        double1 DOUBLE,
+        vachar1 VARCHAR, 
+        array1 ARRAY<VARCHAR>, 
+        map1 MAP<VARCHAR, VARCHAR>, 
+        struct1 STRUCT<FieldName FieldType>) 
+    FROM from_stream
+    WHERE condition
+    PARTITION BY column_name;

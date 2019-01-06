@@ -1,0 +1,10 @@
+CREATE STREAM stream_name ( 
+    boolean1 BOOLEAN,
+    integer1 INTEGER,
+    bigint1 BIGINT,
+    double1 DOUBLE,
+    vachar1 VARCHAR, 
+    array1 ARRAY<VARCHAR>, 
+    map1 MAP<VARCHAR, VARCHAR>, 
+    struct1 STRUCT<FieldName FieldType>) 
+WITH ( KAFKA_TOPIC="topic1", VALUE_FORMAT="JSON", KEY="vachar1", TIMESTAMP="bigint1", TIMESTAMP_FORMAT="yyyy-MM-dd’‘T’‘HH:mm:ssX" );
