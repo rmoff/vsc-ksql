@@ -1,19 +1,18 @@
 'use strict';
 
 import * as vscode from 'vscode';
-import { KSQLClient } from '../../client/KSQLClient';
 import { NodeBase } from './nodeBase';
-import { StreamNode } from './StreamNode';
-import { Stream } from '../../client/models/stream';
+import { KSQLClient } from '../../client/KSQLClient';
+import { Query } from '../../client/models/query';
 
-export class StreamsNode extends NodeBase {
-
+export class QueriesNode extends NodeBase {
+   
     private _client: KSQLClient;
-
-    public readonly contextValue: string = "streams";
+   
+    public readonly contextValue: string = "queries";
 
     constructor(client: KSQLClient, public eventEmitter: vscode.EventEmitter<NodeBase>) {
-        super('Streams');
+        super('Queries');
         this._client = client;
     }
 
@@ -27,10 +26,10 @@ export class StreamsNode extends NodeBase {
 
     public async getChildren(element: NodeBase): Promise<NodeBase[]> {
         let nodes: NodeBase[] = [];
-        let streams: Stream[] = await this._client.getStreams();
-        if(streams !== null && streams !== undefined){
-            streams.forEach(element => {
-            nodes.push(new StreamNode(this._client, element.name));
+        let queries: Query[] = await this._client.getQueries();
+        if(queries !== null && queries !== undefined){
+            queries.forEach(element => {
+            nodes.push(new NodeBase(element.id));
             });
         }
 

@@ -4,7 +4,6 @@ import * as vscode from 'vscode';
 
 export class NodeBase {
     public readonly label: string;
-   // public readonly contextValue: string;
 
     protected constructor(label: string) {
         this.label = label;

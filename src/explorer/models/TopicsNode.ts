@@ -21,7 +21,7 @@ export class TopicsNode extends NodeBase {
             label: this.label,
             collapsibleState: vscode.TreeItemCollapsibleState.Collapsed,
             contextValue: this.contextValue
-        }
+        };
     }
 
     public async getChildren(element: NodeBase): Promise<NodeBase[]> {
