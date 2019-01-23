@@ -5,6 +5,8 @@ import { NodeBase } from './models/nodeBase';
 import { TopicsNode } from './models/TopicsNode';
 import { StreamsNode } from './models/StreamsNode';
 import { TablesNode } from './models/TablesNode';
+import { FunctionsNode } from './models/FunctionsNode';
+import { QueriesNode } from './models/QueriesNode';
 import { KSQLClient } from '../client/KSQLClient';
 
 export class KSQLExplorerProvider implements TreeDataProvider<NodeBase> {
@@ -14,6 +16,8 @@ export class KSQLExplorerProvider implements TreeDataProvider<NodeBase> {
     private _topics? : TopicsNode;
     private _streams? : StreamsNode;
     private _tables? : TablesNode;
+    private _functions? : FunctionsNode;
+    private _queries? : QueriesNode;
 
     private _onDidChangeTreeData: EventEmitter<NodeBase> = new EventEmitter<NodeBase>();
 
@@ -24,6 +28,7 @@ export class KSQLExplorerProvider implements TreeDataProvider<NodeBase> {
     }
 
     public refresh() : void {
+
         if(this._topics !== null && this._topics !== undefined){
             this._onDidChangeTreeData.fire(this._topics);
         }
@@ -34,6 +39,14 @@ export class KSQLExplorerProvider implements TreeDataProvider<NodeBase> {
 
         if(this._tables !== null && this._tables !== undefined){
             this._onDidChangeTreeData.fire(this._tables);
+        }
+
+        if(this._functions !== null && this._functions !== undefined){
+            this._onDidChangeTreeData.fire(this._functions);
+        }
+
+        if(this._queries !== null && this._queries !== undefined){
+            this._onDidChangeTreeData.fire(this._queries);
         }
     }
 
@@ -62,6 +75,14 @@ export class KSQLExplorerProvider implements TreeDataProvider<NodeBase> {
 
         node = new TablesNode(this._client, this._onDidChangeTreeData);
         this._tables = node as TablesNode;
+        rootNodes.push(node);
+
+        node = new FunctionsNode(this._client, this._onDidChangeTreeData);
+        this._functions = node as FunctionsNode;
+        rootNodes.push(node);
+
+        node = new QueriesNode(this._client, this._onDidChangeTreeData);
+        this._queries = node as QueriesNode;
         rootNodes.push(node);
 
         return rootNodes;

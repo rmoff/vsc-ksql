@@ -3,6 +3,7 @@
 Version | Who | Date | What
 -|-|-|-
 v0.1.5 | dgcaron | 20190102 | added ability to execute ksql from the editor against an active environment
+v0.1.4 | dgcaron | 20190103 | added functions and queries to explorer and client
 v0.1.3 | dgcaron | 20180826 | added syntax highlighting for functions
 v0.1.2 | dgcaron | 20180822 | added describe methods to explorer available via context menu (right-click on node)
 v0.1.1 | rmoff | 20180821 | add new screenshots, tweak README

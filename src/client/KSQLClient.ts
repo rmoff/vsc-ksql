@@ -6,6 +6,8 @@ import { KSQLSourceDescriptionResponse } from './models/KSQLSourceDescription';
 import { Topics, Topic } from './models/topic';
 import { Streams, Stream } from './models/stream';
 import { Tables, Table } from './models/table';
+import { Queries, Query } from './models/query';
+import { Functions, Function } from './models/function';
 import { KSQLRequest } from './models/KSQLRequest';
 
 export class KSQLClient {
@@ -47,6 +49,16 @@ export class KSQLClient {
     public async getTables() : Promise<Table[]> {
         let result : Tables[] =  await this.issueCommand<Tables[]>("SHOW TABLES;");
         return result !== null && result.length > 0 ? Promise.resolve(result[0].tables) : Promise.reject();
+    }
+
+    public async getQueries() : Promise<Query[]> {
+        let result : Queries[] =  await this.issueCommand<Queries[]>("SHOW QUERIES;");
+        return result !== null && result.length > 0 ? Promise.resolve(result[0].queries) : Promise.reject();
+    }
+
+    public async getFunctions() : Promise<Function[]> {
+        let result : Functions[] =  await this.issueCommand<Functions[]>("SHOW FUNCTIONS;");
+        return result !== null && result.length > 0 ? Promise.resolve(result[0].functions) : Promise.reject();
     }
 
     public async describe(entity:string) : Promise<KSQLSourceDescriptionResponse> {
