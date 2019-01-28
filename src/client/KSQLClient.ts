@@ -9,6 +9,9 @@ import { Tables, Table } from './models/table';
 import { Queries, Query } from './models/query';
 import { Functions, Function } from './models/function';
 import { KSQLRequest } from './models/KSQLRequest';
+import { IncomingMessage } from 'http';
+
+
 
 export class KSQLClient {
 
@@ -31,6 +34,18 @@ export class KSQLClient {
         }
         return obj !== null && !obj.error_code ? Promise.resolve(obj) : Promise.reject(obj);
     }
+
+    public async select(ksql:string, callback: (chunk: any) => void) : Promise<IncomingMessage> {
+        
+        let request: KSQLRequest = <KSQLRequest>{ ksql: ksql, streamsProperties: {
+            "ksql.streams.auto.offset.reset": "latest" // todo make this a config setting
+          }};
+        let response: http.HttpClientResponse = await this._client.post(this._url+"/query", 
+        JSON.stringify(request),{"Content-Type":"application/json"}); //this seems weird - off spec
+  
+        response.message.on('data', callback);
+        return response.message;
+    } 
 
     public async execute(ksql:string): Promise<KSQLCommandResponse[]> {
         return await this.issueCommand<KSQLCommandResponse[]>(ksql);

@@ -2,6 +2,7 @@
 
 import * as vscode from 'vscode';
 import { KSQLClient } from '../client/KSQLClient';
+import { SelectOutputChannelWriter } from './SelectOutputChannelWriter';
 
 export class KSQLEditorCommandProvider {
 
@@ -53,15 +54,20 @@ export class KSQLEditorCommandProvider {
         else {
             return;
         }
-     
-        this._channel.clear();
 
         if (text.trim() !== "") {
             try {
                 this._channel.appendLine("==== EXECUTING ====");
                 this._channel.appendLine(text);
                 this._channel.show();
-                await this._client.execute(text);
+                if (text.startsWith("SELECT")) {
+                    var output = new SelectOutputChannelWriter(this._client, this._channel);
+                    await output.select(text);
+                }
+                else {
+                    await this._client.execute(text);
+                }
+
                 this._channel.appendLine("");
                 this._channel.appendLine("==== SUCCESS ====");
             }
