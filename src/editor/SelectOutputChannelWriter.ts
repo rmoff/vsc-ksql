@@ -1,8 +1,9 @@
 'use strict';
 
-import { window, ViewColumn, OutputChannel } from 'vscode';
+import { window, ViewColumn, OutputChannel, WebviewPanel } from 'vscode';
 import { KSQLClient } from '../client/KSQLClient';
 import { IncomingMessage } from 'http';
+import { KSQLQueryDescription } from '../client/models/KSQLQueryDescription';
 
 export class SelectOutputChannelWriter {
 
@@ -10,6 +11,7 @@ export class SelectOutputChannelWriter {
 
     private readonly _channel: OutputChannel;
 
+    private _panel?: WebviewPanel;
 
     private _message?: IncomingMessage;
 
@@ -21,75 +23,84 @@ export class SelectOutputChannelWriter {
 
     public async select(ksql: string) {
 
-        const panel = window.createWebviewPanel(
-            'KSQL',
-            'SELECT OUTPUT',
-            ViewColumn.One,
-            {
-                enableScripts: true
-            }
-        );
+        await this.setContent(ksql);
 
-        panel.webview.html = this.content();
-
-        var regex = /((?:\{"row"){1}(?:.+?)(?:"finalMessage":(?:.+?)\}){1})/g
         await this._client.select(ksql, (chunk: any) => {
             if (typeof chunk === "string") {
-                panel.webview.postMessage({ update: chunk });
+                this.addChunk(chunk);
             }
 
             if (chunk instanceof Buffer) {
-                var raw = chunk.toString();
-                var match = raw.match(regex);
-                if (match) {
-
-                    var rows = raw.split(regex);
-                    rows.forEach(t => {
-                        if (t && t.trim() !== "") {
-                            var row;
-                            try {
-                                row = JSON.parse(t.trim());
-                            } catch (e) {
-                                console.error(t);
-                                console.error(e.message);
-                            }
-
-                            if (row) {
-                                panel.webview.postMessage(row);
-                            }
-                        }
-                    });
-                }
+                this.addChunk(chunk.toString());
             }
         });
     }
 
-    private content(): string {
+    private async setContent(ksql: string) {
+        const explain = await this._client.expain(ksql);
+        if(explain){
+            this._panel = window.createWebviewPanel(
+                'KSQL',
+                'SELECT OUTPUT',
+                ViewColumn.One,
+                {
+                    enableScripts: true
+                }
+            );
+
+            this._panel.webview.html = this.getContent(explain.queryDescription);
+        }
+    }
+
+    private addChunk(chunk: string) {
+        var regex = /((?:\{"row"){1}(?:.+?)(?:"finalMessage":(?:.+?)\}){1})/g
+        var match = chunk.match(regex);
+        if ( match) {
+
+            var rows = chunk.split(regex);
+            rows.forEach(t => {
+                if (t && t.trim() !== "") {
+                    var row;
+                    try {
+                        row = JSON.parse(t.trim());
+                    } catch (e) {
+                        console.error(t);
+                        console.error(e.message);
+                    }
+
+                    if (this._panel && row) {
+                        this._panel.webview.postMessage(row);
+                    }
+                }
+            });
+        }
+    }
+
+    private getContent(d: KSQLQueryDescription): string {
         return `<!DOCTYPE html>
         <html lang="en">
             <head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <title>KSQL</title>
-            </head>
-            <style>
-                table {
-                    text-align: left;
-                
-                table td, table th {
-                    padding: 4px 20px 4px 2px;
-                }
-            </style>
+                </head>
+                <style>
+                    table {
+                        text-align: left;
+                    
+                    .header {
+                        padding: 4px 20px 4px 2px;
+                    }
+                </style>
+            
             <body>
-                <table id="content">
-                    <tr>
-                        <th>#</th>
-                        <th>ROWTIME</th>
-                        <th>ROWKEY</th>
-                        <th>VIEWTIME</th>
-                        <th>USERID</th>
-                        <th>PAGEID</th>
-                    </tr>
+                <table>
+                    <thead>
+                        <tr>
+                            ${d.fields.map(field => `<th class="header">${field.name}</th>`).join("\n")}
+                        </tr>
+                    </thead>
+                    <tbody id="content"></tbody>
                 </table>
                 <p id="final"></p>
             </body>
@@ -98,14 +109,10 @@ export class SelectOutputChannelWriter {
                 const content = document.getElementById('content');
 
                 window.addEventListener('message', event => {
-                    const message = event.data; // The JSON data our extension sent
+                    const message = event.data;
                     
                     if(message.row) {
                         var row = document.createElement("tr");
-                        
-                        var column = document.createElement("td");
-                        column.innerText = content.childElementCount;
-                        row.appendChild(column);
                         
                         message.row.columns.forEach(c => {
                             var column = document.createElement("td");

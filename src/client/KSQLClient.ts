@@ -10,6 +10,7 @@ import { Queries, Query } from './models/query';
 import { Functions, Function } from './models/function';
 import { KSQLRequest } from './models/KSQLRequest';
 import { IncomingMessage } from 'http';
+import { KSQLQueryDescriptionResponse } from './models/KSQLQueryDescription';
 
 
 
@@ -38,7 +39,7 @@ export class KSQLClient {
     public async select(ksql:string, callback: (chunk: any) => void) : Promise<IncomingMessage> {
         
         let request: KSQLRequest = <KSQLRequest>{ ksql: ksql, streamsProperties: {
-            "ksql.streams.auto.offset.reset": "latest" // todo make this a config setting
+            "ksql.streams.auto.offset.reset": "earliest" // todo make this a config setting
           }};
         let response: http.HttpClientResponse = await this._client.post(this._url+"/query", 
         JSON.stringify(request),{"Content-Type":"application/json"}); //this seems weird - off spec
@@ -74,6 +75,11 @@ export class KSQLClient {
     public async getFunctions() : Promise<Function[]> {
         let result : Functions[] =  await this.issueCommand<Functions[]>("SHOW FUNCTIONS;");
         return result !== null && result.length > 0 ? Promise.resolve(result[0].functions) : Promise.reject();
+    }
+
+    public async expain(ksql: string) : Promise<KSQLQueryDescriptionResponse> {
+        let result : KSQLQueryDescriptionResponse[] =  await this.issueCommand<KSQLQueryDescriptionResponse[]>("EXPLAIN "+ksql );
+        return result !== null && result.length > 0 ? Promise.resolve(result[0]) : Promise.reject();
     }
 
     public async describe(entity:string) : Promise<KSQLSourceDescriptionResponse> {
