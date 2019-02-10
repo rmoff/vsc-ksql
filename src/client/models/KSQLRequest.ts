@@ -1,5 +1,6 @@
 'use strict';
 
 export interface KSQLRequest {
-    ksql: string
+    ksql: string;
+    streamsProperties: Object;
 }
