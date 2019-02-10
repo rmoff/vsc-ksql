@@ -2,13 +2,15 @@
 
 import * as vscode from 'vscode';
 import { KSQLClient } from '../client/KSQLClient';
-import { SelectOutputChannelWriter } from './SelectOutputChannelWriter';
+import { KSQLSelectOutputWriter } from './KSQLSelectOutputWriter';
 
 export class KSQLEditorCommandProvider {
 
     private _client: KSQLClient;
 
     private readonly _channel: vscode.OutputChannel = vscode.window.createOutputChannel("KSQL");
+
+    private readonly _queries: KSQLSelectOutputWriter[] = [];
 
     public constructor(client: KSQLClient) {
         this._client = client;
@@ -21,23 +23,7 @@ export class KSQLEditorCommandProvider {
             return;
         }
 
-        let text = activeEditor.document.getText();
-        this._channel.clear();
-        if (text.trim() !== "") {
-            try {
-                this._channel.appendLine("==== EXECUTING ====");
-                this._channel.appendLine(text);
-                this._channel.show();
-                await this._client.execute(text);
-                this._channel.appendLine("");
-                this._channel.appendLine("==== SUCCESS ====");
-            }
-            catch (err) {
-                this._channel.appendLine("");
-                this._channel.appendLine("==== ERROR ====");
-                this._channel.appendLine(err.message);
-            }
-        }
+        await this.execute(activeEditor.document.getText());
     }
 
     public async executeSelection() {
@@ -55,21 +41,25 @@ export class KSQLEditorCommandProvider {
             return;
         }
 
+        await this.execute(text);
+   
+    }
+
+    private async execute(text: string){
         if (text.trim() !== "") {
             try {
+                this._channel.show(true);
                 this._channel.appendLine("==== EXECUTING ====");
                 this._channel.appendLine(text);
                 this._channel.show();
                 if (text.startsWith("SELECT")) {
-                    var output = new SelectOutputChannelWriter(this._client, this._channel);
+                    var output = new KSQLSelectOutputWriter("QUERY #" + (this._queries.length + 1), this._client);
+                    this._queries.push(output);
                     await output.select(text);
                 }
                 else {
                     await this._client.execute(text);
                 }
-
-                this._channel.appendLine("");
-                this._channel.appendLine("==== SUCCESS ====");
             }
             catch (err) {
                 this._channel.appendLine("");

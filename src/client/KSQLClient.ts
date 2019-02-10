@@ -11,23 +11,22 @@ import { Functions, Function } from './models/function';
 import { KSQLRequest } from './models/KSQLRequest';
 import { IncomingMessage } from 'http';
 import { KSQLQueryDescriptionResponse } from './models/KSQLQueryDescription';
-
-
+import { KSQLConnectionConfig } from '../KSQLConnectionConfig';
 
 export class KSQLClient {
 
-    private _url: string;
     private _client: http.HttpClient ;
 
-    public constructor(client:http.HttpClient, url:string) {
+    private _config: KSQLConnectionConfig;
 
+    public constructor(client:http.HttpClient, config: KSQLConnectionConfig) {
         this._client = client;
-        this._url = url;
+        this._config = config;
     }
 
     private async issueCommand<T>(ksql:string): Promise<T>{
         let request: KSQLRequest = <KSQLRequest>{ ksql: ksql};
-        let response: http.HttpClientResponse = await this._client.post(this._url+"/ksql", JSON.stringify(request),{"Content-Type":"application/vnd.ksql.v1+json; charset=utf-8"});
+        let response: http.HttpClientResponse = await this._client.post(this._config.url+"/ksql", JSON.stringify(request),{"Content-Type":"application/vnd.ksql.v1+json; charset=utf-8"});
         let body: string = await response.readBody();
         let obj = null;
         if(body !== null){
@@ -36,12 +35,18 @@ export class KSQLClient {
         return obj !== null && !obj.error_code ? Promise.resolve(obj) : Promise.reject(obj);
     }
 
+    private propertiesFromConfig() : any {
+        if(!this._config) {
+            return {};
+        }
+
+        return {"ksql.streams.auto.offset.reset": this._config.streamsAutoOffsetReset };
+    }
+
     public async select(ksql:string, callback: (chunk: any) => void) : Promise<IncomingMessage> {
         
-        let request: KSQLRequest = <KSQLRequest>{ ksql: ksql, streamsProperties: {
-            "ksql.streams.auto.offset.reset": "earliest" // todo make this a config setting
-          }};
-        let response: http.HttpClientResponse = await this._client.post(this._url+"/query", 
+        let request: KSQLRequest = <KSQLRequest>{ ksql: ksql, streamsProperties: this.propertiesFromConfig()};
+        let response: http.HttpClientResponse = await this._client.post(this._config.url+"/query", 
         JSON.stringify(request),{"Content-Type":"application/json"}); //this seems weird - off spec
   
         response.message.on('data', callback);
@@ -77,7 +82,7 @@ export class KSQLClient {
         return result !== null && result.length > 0 ? Promise.resolve(result[0].functions) : Promise.reject();
     }
 
-    public async expain(ksql: string) : Promise<KSQLQueryDescriptionResponse> {
+    public async explain(ksql: string) : Promise<KSQLQueryDescriptionResponse> {
         let result : KSQLQueryDescriptionResponse[] =  await this.issueCommand<KSQLQueryDescriptionResponse[]>("EXPLAIN "+ksql );
         return result !== null && result.length > 0 ? Promise.resolve(result[0]) : Promise.reject();
     }

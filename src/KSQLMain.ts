@@ -13,10 +13,10 @@ export let ksqlEditorCommandProvider: KSQLEditorCommandProvider;
 
 export function activate(context: vscode.ExtensionContext) {
 
-    var settings = new KSQLConnectionConfig().getConfiguration("ksql");
+    var settings = new KSQLConnectionConfig();
     
     let httpClient: http.HttpClient = new http.HttpClient("vs-code");
-    let client: KSQLClient = new KSQLClient(httpClient, settings.url);
+    let client: KSQLClient = new KSQLClient(httpClient, settings);
 
     registerEditorCommands(context,client);
     registerExplorer(context,client);

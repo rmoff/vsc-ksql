@@ -1,10 +1,26 @@
 'use strict';
 
-import { WorkspaceConfiguration, workspace, window, Uri } from 'vscode';
+import { workspace, window, WorkspaceConfiguration, Uri } from 'vscode';
 
 export class KSQLConnectionConfig {
+  
+    private readonly _extension: string = "ksql";
+    private _config: WorkspaceConfiguration;
 
-    private get activeTextEditorUri(): string {
+    get url(): string {
+        return this._config.get<string>("url","http://localhost:8088"); 
+    }
+
+    get streamsAutoOffsetReset(): string {
+        return this._config.get<string>("streamsAutoOffsetReset","latest"); 
+    }
+     
+    public constructor() {
+       this._config = this.getConfiguration();
+       workspace.onDidChangeConfiguration(() => this._config = this.getConfiguration());
+    }
+
+    private get activeTextEditorUri(): Uri | string {
         if (typeof window.activeTextEditor !== 'undefined' &&
             typeof window.activeTextEditor.document !== 'undefined') {
             return window.activeTextEditor.document.uri.toString();
@@ -12,7 +28,7 @@ export class KSQLConnectionConfig {
         return '';
     }
 
-    public getConfiguration(extensionName: string, resource?: Uri | string): WorkspaceConfiguration {
+    private getConfiguration(resource?: Uri | string): WorkspaceConfiguration{
         if (resource === 'undefined' || resource === null) {
             resource = this.activeTextEditorUri;
         }
@@ -23,6 +39,7 @@ export class KSQLConnectionConfig {
                 resource = undefined;
             }
         }
-        return workspace.getConfiguration(extensionName, resource as Uri);
+    
+        return workspace.getConfiguration(this._extension, resource as Uri);
     }
 }
