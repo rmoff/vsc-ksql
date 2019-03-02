@@ -34,6 +34,9 @@
 		},
 		{
 			"include": "#numeric"
+		},
+		{
+			"include": "#comments"
 		}
 	],
 	"repository": {
@@ -260,6 +263,13 @@
 			"name": "string.quoted.single.ksql",
 			"begin": "'",
 			"end": "'"
+		},
+		"comments": {
+			"patterns": [{
+				"contentName": "comment.line.double-dash.ksql",
+				"begin": "--",
+				"end": "(?=$)"
+			}]
 		}
 	},
 	"scopeName": "source.ksql"
